@@ -154,7 +154,7 @@ jobs:
               id: 'deploy'
               uses: 'google-github-actions/deploy-appengine@v2'
               with:
-                  project_id: playground-367903
+                  project_id: 367903
 
             - id: test
               run: curl "${{ steps.deploy.outputs.url }}/translate?word=hello"
