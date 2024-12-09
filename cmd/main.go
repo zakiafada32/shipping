@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"shipping-go/handlers"
-	"shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping-go/handlers"
+	"github.com/zakiafada32/shipping-go/handlers/rest"
 )
 
 func main() {

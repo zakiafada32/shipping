@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"shipping-go/translation"
+	"github.com/zakiafada32/shipping-go/translation"
 )
 
 type Resp struct { // <2>

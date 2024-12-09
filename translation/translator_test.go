@@ -3,7 +3,7 @@ package translation_test
 import (
 	"testing"
 
-	"shipping-go/translation"
+	"github.com/zakiafada32/shipping-go/translation"
 )
 
 func TestTranslate(t *testing.T) {

@@ -3,7 +3,7 @@ package faas
 import (
 	"net/http"
 
-	"shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping-go/handlers/rest"
 )
 
 func Translate(w http.ResponseWriter, r *http.Request) {
