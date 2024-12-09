@@ -4,14 +4,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
 	"github.com/zakiafada32/shipping-go/handlers"
 	"github.com/zakiafada32/shipping-go/handlers/rest"
 )
-
-func init() {
-	functions.HTTP("translate", rest.TranslateHandler)
-}
 
 func main() {
 
