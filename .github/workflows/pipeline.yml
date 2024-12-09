@@ -123,7 +123,6 @@ jobs:
               uses: google-github-actions/deploy-cloud-functions@v2
               with:
                   name: translate
-                  entry_point: translate
                   runtime: go123
                   source_dir: ./
 
