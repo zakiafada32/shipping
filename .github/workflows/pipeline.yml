@@ -111,9 +111,15 @@ jobs:
               uses: google-github-actions/deploy-cloud-functions@v0.4.0
               with:
                   name: translate
-                  entry_point: Translate
+                  entry_point: translate
                   runtime: go123
                   credentials: ${{ secrets.gcp_credentials }}
                   source_dir: ./
+            - name: Set IAM Policy
+              run: |
+                  gcloud functions add-iam-policy-binding translate \
+                    --region us-central1 \
+                    --member="allUsers" \
+                    --role="roles/cloudfunctions.invoker"
             - id: test
-              run: curl "${{ steps.deploy.outputs.url }}/hello"
+              run: curl "${{ steps.deploy.outputs.url }}?word=hello"
