@@ -13,11 +13,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Set up Go 1.x
-              uses: actions/setup-go@v2
+              uses: actions/setup-go@v5
               with:
                   go-version: 1.23.4
             - name: Check out code into the Go module directory
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
             - name: Run Test
               run: make test
             - name: Coverage Check
@@ -40,12 +40,12 @@ jobs:
         needs: test
         steps:
             - name: Set up Go 1.x
-              uses: actions/setup-go@v2
+              uses: actions/setup-go@v5
               with:
                   go-version: 1.23.4
 
             - name: Check out code into the Go module directory #
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
 
             - name: Build
               run: make build
@@ -67,22 +67,25 @@ jobs:
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
+
             - name: Download binary
               uses: actions/download-artifact@v4
               with:
                   name: api
+
             - name: Changelog
               uses: scottbrenner/generate-changelog-action@master
               id: Changelog
+
             - name: Create Release
               id: create_release
-              uses: actions/create-release@v1
+              uses: softprops/action-gh-release@v2
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
               with:
                   tag_name: ${{ github.ref }}
-                  release_name: Release ${{ github.ref }}
+                  name: Release ${{ github.ref }}
                   body: |
                       ${{ steps.Changelog.outputs.changelog }}
                   draft: false
@@ -96,6 +99,7 @@ jobs:
                   asset_path: api
                   asset_name: api
                   asset_content_type: application/octet-stream
+
     deploy-function:
         name: Deploy FaaS
         runs-on: ubuntu-latest
@@ -103,23 +107,24 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         steps:
             - name: Check out code into the Go module directory
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
               with:
                   fetch-depth: 0
+
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                  workload_identity_provider: 'projects/playground-367903/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+                  service_account: 'playground@playground-367903.iam.gserviceaccount.com'
+
             - name: Deploy function
               id: deploy
-              uses: google-github-actions/deploy-cloud-functions@v0.4.0
+              uses: google-github-actions/deploy-cloud-functions@v2
               with:
                   name: translate
                   entry_point: translate
                   runtime: go123
-                  credentials: ${{ secrets.gcp_credentials }}
                   source_dir: ./
-            - name: Set IAM Policy
-              run: |
-                  gcloud functions add-iam-policy-binding translate \
-                    --region us-central1 \
-                    --member="allUsers" \
-                    --role="roles/cloudfunctions.invoker"
+
             - id: test
               run: curl "${{ steps.deploy.outputs.url }}?word=hello"
