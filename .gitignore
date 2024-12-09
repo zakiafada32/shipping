@@ -13,3 +13,4 @@ with LiteIDE
 include it)
 # vendor/
 api 
+cover.html
