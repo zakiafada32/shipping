@@ -128,4 +128,7 @@ jobs:
                   entry_point: Translate
 
             - id: test
-              run: curl "${{ steps.deploy.outputs.url }}?word=hello"
+              run: |
+                  curl "${{ steps.deploy.outputs.url }}?word=hello" \
+                  -H "Authorization: Bearer ${{ steps.auth.outputs.access_token }}" \
+                  -H "Content-Type: application/json"

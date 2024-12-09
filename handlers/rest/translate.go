@@ -2,7 +2,6 @@ package rest
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/zakiafada32/shipping-go/translation"
@@ -23,7 +22,7 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	word := r.URL.Query().Get("word")
-	fmt.Printf("word: %s\n", word)
+
 	translation := translation.Translate(word, language)
 	if translation == "" {
 		language = ""
