@@ -150,8 +150,9 @@ jobs:
               with:
                   credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-            - name: Install app-engine-go component
-              run: gcloud components install app-engine-go
+            - uses: 'google-github-actions/setup-gcloud@v2'
+              with:
+                  project_id: playground-367903
 
             - name: Deploy App
               id: 'deploy'
