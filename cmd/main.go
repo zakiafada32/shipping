@@ -7,6 +7,7 @@ import (
 
 	"github.com/zakiafada32/shipping-go/handlers"
 	"github.com/zakiafada32/shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping-go/translation"
 )
 
 func main() {
@@ -15,8 +16,10 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/translate", rest.TranslateHandler)
-	mux.HandleFunc("/health", handlers.HealthCheck)
+	translationService := translation.NewStaticService()
+	translateHandler := rest.NewTranslateHandler(translationService)
+	mux.HandleFunc("/translate/hello", translateHandler.TranslateHandler)
+	mux.HandleFunc("/health", handlers.HealthCheck) // <1>
 
 	server := &http.Server{
 		Addr:         addr,
@@ -27,6 +30,7 @@ func main() {
 	}
 
 	log.Printf("listening on %s\n", addr)
+
 	log.Fatal(server.ListenAndServe())
 }
 

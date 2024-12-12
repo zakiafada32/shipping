@@ -7,13 +7,12 @@ import (
 )
 
 func TestTranslate(t *testing.T) {
-	// Arrange
-	tt := []struct { // <1>
+	tt := []struct {
 		Word        string
 		Language    string
 		Translation string
 	}{
-		{ //<2>
+		{
 			Word:        "hello",
 			Language:    "english",
 			Translation: "hello",
@@ -28,7 +27,7 @@ func TestTranslate(t *testing.T) {
 			Language:    "finnish",
 			Translation: "hei",
 		},
-		{ // <1>
+		{
 			Word:        "bye",
 			Language:    "dutch",
 			Translation: "",
@@ -38,34 +37,38 @@ func TestTranslate(t *testing.T) {
 			Language:    "dutch",
 			Translation: "",
 		},
-		{ // <1>
+		{
 			Word:        "bye",
 			Language:    "german",
 			Translation: "",
 		},
 		{
 			Word:        "hello",
-			Language:    "German", // <1>
+			Language:    "German",
 			Translation: "hallo",
 		},
 		{
-			Word:        "Hello", // <2>
+			Word:        "Hello",
 			Language:    "german",
 			Translation: "hallo",
 		},
 		{
-			Word:        "hello ", // <3>
+			Word:        "hello ",
 			Language:    "german",
 			Translation: "hallo",
+		},
+		{
+			Word:        "hello",
+			Language:    "french",
+			Translation: "bonjour",
 		},
 	}
+	underTest := translation.NewStaticService()
+	for _, test := range tt {
 
-	for _, test := range tt { // <3>
-		// Act
-		res := translation.Translate(test.Word, test.Language) // <4>
+		res := underTest.Translate(test.Word, test.Language)
 
-		// Assert
-		if res != test.Translation { // <5>
+		if res != test.Translation {
 			t.Errorf(
 				`expected "%s" to be "%s" from "%s" but received "%s"`,
 				test.Word, test.Language, test.Translation, res)

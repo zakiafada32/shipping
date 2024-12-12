@@ -4,16 +4,28 @@ package rest
 import (
 	"encoding/json"
 	"net/http"
-
-	"github.com/zakiafada32/shipping-go/translation"
 )
+
+type Translator interface {
+	Translate(word string, language string) string
+}
+
+type TranslateHandler struct {
+	service Translator
+}
+
+func NewTranslateHandler(service Translator) *TranslateHandler {
+	return &TranslateHandler{
+		service: service,
+	}
+}
 
 type Resp struct {
 	Language    string `json:"language"`
 	Translation string `json:"translation"`
 }
 
-func TranslateHandler(w http.ResponseWriter, r *http.Request) {
+func (t *TranslateHandler) TranslateHandler(w http.ResponseWriter, r *http.Request) {
 	enc := json.NewEncoder(w)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
@@ -24,7 +36,7 @@ func TranslateHandler(w http.ResponseWriter, r *http.Request) {
 
 	word := r.URL.Query().Get("word")
 
-	translation := translation.Translate(word, language)
+	translation := t.service.Translate(word, language)
 	if translation == "" {
 		w.WriteHeader(404)
 		return
