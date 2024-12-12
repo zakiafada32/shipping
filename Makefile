@@ -36,3 +36,9 @@ min-coverage:
 
 report:
 	go tool cover -html=coverage.out -o cover.html
+
+check-format:
+	test -z $$(go fmt ./...)
+
+install-lint:
+	sudo curl -sSfL 	https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.62.2
