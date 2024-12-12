@@ -1,10 +1,11 @@
+// Package translation : Implement the translation logic.
 package translation
 
 import "strings"
 
 func Translate(word string, language string) string {
-	word = sanitizeInput(word)         // <1>
-	language = sanitizeInput(language) // <2>
+	word = sanitizeInput(word)
+	language = sanitizeInput(language)
 
 	if word != "hello" {
 		return ""
@@ -22,7 +23,7 @@ func Translate(word string, language string) string {
 	}
 }
 
-func sanitizeInput(w string) string { // <3>
+func sanitizeInput(w string) string {
 	w = strings.ToLower(w)
 	return strings.TrimSpace(w)
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/zakiafada32/shipping-go/handlers"
 	"github.com/zakiafada32/shipping-go/handlers/rest"
@@ -17,9 +18,16 @@ func main() {
 	mux.HandleFunc("/translate", rest.TranslateHandler)
 	mux.HandleFunc("/health", handlers.HealthCheck)
 
-	log.Printf("listening on %s\n", addr)
+	server := &http.Server{
+		Addr:         addr,
+		Handler:      mux,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  15 * time.Second,
+	}
 
-	log.Fatal(http.ListenAndServe(addr, mux))
+	log.Printf("listening on %s\n", addr)
+	log.Fatal(server.ListenAndServe())
 }
 
 type Resp struct {

@@ -1,3 +1,4 @@
+// Package handlers : Implement the HTTP handlers for the API.
 package handlers
 
 import (

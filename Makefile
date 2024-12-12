@@ -42,3 +42,10 @@ check-format:
 
 install-lint:
 	sudo curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.62.2
+
+static-check:
+	golangci-lint run
+
+copy-hooks:
+	chmod +x scripts/hooks/* 
+	cp -r ./scripts/hooks .git/.

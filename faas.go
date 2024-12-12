@@ -1,3 +1,4 @@
+// Package faas : Implement the HTTP handlers for the cloud function.
 package faas
 
 import (

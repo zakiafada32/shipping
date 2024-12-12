@@ -1,3 +1,4 @@
+// Package rest : Implement the HTTP handlers for the REST API.
 package rest
 
 import (
@@ -7,7 +8,7 @@ import (
 	"github.com/zakiafada32/shipping-go/translation"
 )
 
-type Resp struct { // <2>
+type Resp struct {
 	Language    string `json:"language"`
 	Translation string `json:"translation"`
 }
