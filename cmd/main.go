@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/zakiafada32/shipping-go/config"
 	"github.com/zakiafada32/shipping-go/handlers"
 	"github.com/zakiafada32/shipping-go/handlers/rest"
 	"github.com/zakiafada32/shipping-go/translation"
@@ -12,14 +13,22 @@ import (
 
 func main() {
 
-	addr := ":8080"
+	cfg := config.LoadConfiguration()
+	addr := cfg.Port
 
 	mux := http.NewServeMux()
 
-	translationService := translation.NewStaticService()
+	var translationService rest.Translator
+	translationService = translation.NewStaticService()
+	if cfg.LegacyEndpoint != "" {
+		log.Printf("creating external translation client: %s", cfg.LegacyEndpoint)
+		client := translation.NewHelloClient(cfg.LegacyEndpoint)
+		translationService = translation.NewRemoteService(client)
+	}
+
 	translateHandler := rest.NewTranslateHandler(translationService)
 	mux.HandleFunc("/translate/hello", translateHandler.TranslateHandler)
-	mux.HandleFunc("/health", handlers.HealthCheck) // <1>
+	mux.HandleFunc("/health", handlers.HealthCheck)
 
 	server := &http.Server{
 		Addr:         addr,
