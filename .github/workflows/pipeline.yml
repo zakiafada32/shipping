@@ -13,6 +13,7 @@ defaults:
 permissions:
     contents: read
     id-token: write
+    packages: write
 
 env:
     REGISTRY: ghcr.io
