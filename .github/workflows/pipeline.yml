@@ -3,7 +3,7 @@ name: Shipping
 on:
     push:
         branches:
-            - test
+            - main
         tags:
             - v*
 defaults:
@@ -137,10 +137,10 @@ jobs:
 
     containerize-buildpack:
         name: Build Container buildpack
-        runs-on: ubuntu-latest #
-        needs: test #<6>
+        runs-on: ubuntu-latest
+        needs: test
         steps:
-            - name: Check out code into the Go module directory #
+            - name: Check out code into the Go module directory
               uses: actions/checkout@v4
 
             - name: Install Pack
@@ -183,8 +183,8 @@ jobs:
 
     deploy-container:
         name: Deploy Container buildpack
-        runs-on: ubuntu-latest #
-        needs: containerize-buildpack #<6>
+        runs-on: ubuntu-latest
+        needs: containerize-buildpack
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         steps:
             - name: Deploy to CaaS
