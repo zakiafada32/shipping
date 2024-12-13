@@ -14,6 +14,10 @@ permissions:
     contents: read
     id-token: write
 
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
 jobs:
     format-check:
         name: Check formatting
@@ -129,6 +133,70 @@ jobs:
                   draft: false
                   prerelease: false
                   token: ${{ secrets.GH_PAT }}
+
+    containerize-buildpack:
+        name: Build Container buildpack
+        runs-on: ubuntu-latest #
+        needs: test #<6>
+        steps:
+            - name: Check out code into the Go module directory #
+              uses: actions/checkout@v4
+
+            - name: Install Pack
+              run:
+                  (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.21.1/pack-v0.21.1-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)
+                  (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.35.1/pack-v0.35.1-linux.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)
+
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                  credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+            - name: Build
+              run: pack build gcr.io/${{ secrets.GCP_PROJECT_ID }}/shipping-go:latest --builder gcr.io/buildpacks/builder:v1
+
+            - name: Set up Cloud SDK
+              uses: google-github-actions/setup-gcloud@v2
+              with:
+                  project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+            - name: 'Use gcloud CLI'
+              run: 'gcloud info'
+
+            - name: Configure Docker
+              run: gcloud auth configure-docker --quiet
+
+            - name: Push Docker image
+              run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/shipping-go:latest
+
+            - name: Log in to the GHCR
+              uses: docker/login-action@v3
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Tag for Github
+              run: docker image tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/shipping-go:latest ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+            - name: Push Docker image to GCP
+              run: docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+    deploy-container:
+        name: Deploy Container buildpack
+        runs-on: ubuntu-latest #
+        needs: containerize-buildpack #<6>
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        steps:
+            - name: Deploy to CaaS
+              id: deploy
+              uses: google-github-actions/deploy-cloudrun@v2
+              with:
+                  service: translate
+                  image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/shipping-go:latest
+
+            - id: test
+              run: curl "${{ steps.deploy.outputs.url }}?word=hello"
 
     # deploy-function:
     #     name: Deploy FaaS
