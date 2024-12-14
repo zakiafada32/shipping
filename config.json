@@ -1,3 +1,5 @@
 {
-    "port": ":8079"
+    "port": ":8079",
+    "database_url": "localhost",
+    "database_port": "6379"
 }

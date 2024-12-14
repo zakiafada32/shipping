@@ -29,7 +29,7 @@ func (t *TranslateHandler) TranslateHandler(w http.ResponseWriter, r *http.Reque
 	enc := json.NewEncoder(w)
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	language := r.URL.Query().Get("language")
+	language := r.URL.Query().Get("lang")
 	if language == "" {
 		language = "english"
 	}

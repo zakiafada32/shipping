@@ -24,7 +24,6 @@ type Configuration struct {
 var defaultConfiguration = Configuration{
 	Port:            ":8080",
 	DefaultLanguage: "english",
-	DatabasePort:    "6379",
 }
 
 func (c *Configuration) LoadFromEnv() {
