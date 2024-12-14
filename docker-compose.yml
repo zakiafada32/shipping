@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-    # api-min:
-    #     profiles: ['prod']
-    #     image: docker pull ghcr.io/zakiafada32/shipping-go:latest
-    #     ports:
-    #         - 8080:8080
-    #     build: .
+    api-min:
+        profiles: ['prod']
+        image: docker pull ghcr.io/zakiafada32/shipping-go:latest
+        ports:
+            - 8080:8080
+        build: .
 
-    # api-dev:
-    #     profiles: ['dev']
-    #     image: docker pull ghcr.io/zakiafada32/shipping-go:latest
-    #     ports:
-    #         - 8080:8080
-    #     build:
-    #         context: .
-    #         target: dev
+    api-dev:
+        profiles: ['dev']
+        image: docker pull ghcr.io/zakiafada32/shipping-go:latest
+        ports:
+            - 8080:8080
+        build:
+            context: .
+            target: dev
 
     database:
         image: redis:latest
