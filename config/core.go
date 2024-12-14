@@ -10,11 +10,13 @@ import (
 )
 
 type Configuration struct {
-	Port            string `json:"port"`
-	DefaultLanguage string `json:"default_language"`
-	LegacyEndpoint  string `json:"legacy_endpoint"`
-	DatabaseType    string `json:"database_type"`
-	DatabaseURL     string `json:"database_url"`
+	Port             string `json:"port"`
+	DefaultLanguage  string `json:"default_language"`
+	LegacyEndpoint   string `json:"legacy_endpoint"`
+	DatabaseType     string `json:"database_type"`
+	DatabaseURL      string `json:"database_url"`
+	DatabasePort     string `json:"database_port"`
+	DatabasePassword string `json:"database_password"`
 }
 
 var defaultConfiguration = Configuration{

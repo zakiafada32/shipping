@@ -49,3 +49,4 @@ static-check:
 copy-hooks:
 	chmod +x scripts/hooks/* 
 	cp -r ./scripts/hooks .git/.
+
