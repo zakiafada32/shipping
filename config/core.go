@@ -24,6 +24,7 @@ type Configuration struct {
 var defaultConfiguration = Configuration{
 	Port:            ":8080",
 	DefaultLanguage: "english",
+	DatabasePort:    "6379",
 }
 
 func (c *Configuration) LoadFromEnv() {
@@ -32,6 +33,12 @@ func (c *Configuration) LoadFromEnv() {
 	}
 	if port := os.Getenv("PORT"); port != "" {
 		c.Port = port
+	}
+	if password := os.Getenv("DATABASE_PASSWORD"); password != "" {
+		c.DatabasePassword = password
+	}
+	if url := os.Getenv("DATABASE_URL"); url != "" {
+		c.DatabaseURL = url
 	}
 }
 

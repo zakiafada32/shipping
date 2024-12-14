@@ -53,7 +53,7 @@ func (api *apiFeature) theResponseShouldBe(ctx context.Context, result string) e
 		return fmt.Errorf("unable to get language from context")
 	}
 
-	url := fmt.Sprintf("%s/translate/hello?word=%s", api.server.URL, api.word)
+	url := fmt.Sprintf("%s/translate?word=%s", api.server.URL, api.word)
 
 	resp, err := api.client.R().
 		SetHeader("Content-Type", "application/json").
