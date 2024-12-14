@@ -7,6 +7,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 )
 
@@ -45,6 +46,8 @@ func (c *Configuration) ParsePort() {
 }
 
 func (c *Configuration) LoadFromJSON(path string) error {
+	path = filepath.Clean(path)
+
 	log.Printf("loading configuration from file: %s\n", path)
 	b, err := os.ReadFile(path)
 	if err != nil {
