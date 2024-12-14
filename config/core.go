@@ -1,3 +1,4 @@
+// Package config provides a way to load configuration from a file or environment variables
 package config
 
 import (
