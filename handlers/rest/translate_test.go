@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/zakiafada32/shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping/handlers/rest"
 )
 
 type stubbedService struct{}

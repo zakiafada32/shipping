@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/zakiafada32/shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping/handlers/rest"
 )
 
 var _ rest.Translator = &RemoteService{}

@@ -1,4 +1,4 @@
-module github.com/zakiafada32/shipping-go
+module github.com/zakiafada32/shipping
 
 go 1.23.4
 

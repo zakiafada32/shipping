@@ -9,8 +9,8 @@ import (
 	_ "embed"
 
 	"github.com/redis/go-redis/v9"
-	"github.com/zakiafada32/shipping-go/config"
-	"github.com/zakiafada32/shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping/config"
+	"github.com/zakiafada32/shipping/handlers/rest"
 )
 
 var _ rest.Translator = &Database{}

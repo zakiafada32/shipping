@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/GoogleCloudPlatform/functions-framework-go/functions"
-	"github.com/zakiafada32/shipping-go/handlers/rest"
-	"github.com/zakiafada32/shipping-go/translation"
+	"github.com/zakiafada32/shipping/handlers/rest"
+	"github.com/zakiafada32/shipping/translation"
 )
 
 func init() {

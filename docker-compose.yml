@@ -1,16 +1,16 @@
-version: '3.8'
+version: "3.8"
 
 services:
     api-min:
-        profiles: ['prod']
-        image: docker pull ghcr.io/zakiafada32/shipping-go:latest
+        profiles: ["prod"]
+        image: docker pull ghcr.io/zakiafada32/shipping:latest
         ports:
             - 8080:8080
         build: .
 
     api-dev:
-        profiles: ['dev']
-        image: docker pull ghcr.io/zakiafada32/shipping-go:latest
+        profiles: ["dev"]
+        image: docker pull ghcr.io/zakiafada32/shipping:latest
         ports:
             - 8080:8080
         build:
@@ -22,4 +22,4 @@ services:
         ports:
             - 6379:6379
         volumes:
-            - './data/:/data/'
+            - "./data/:/data/"

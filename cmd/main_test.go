@@ -12,8 +12,8 @@ import (
 	"github.com/cucumber/godog"
 	resty "github.com/go-resty/resty/v2"
 	"github.com/ory/dockertest"
-	"github.com/zakiafada32/shipping-go/config"
-	"github.com/zakiafada32/shipping-go/handlers/rest"
+	"github.com/zakiafada32/shipping/config"
+	"github.com/zakiafada32/shipping/handlers/rest"
 )
 
 type apiFeature struct {

@@ -10,7 +10,7 @@ import (
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/zakiafada32/shipping-go/translation"
+	"github.com/zakiafada32/shipping/translation"
 )
 
 func TestHelloClientSuite(t *testing.T) {

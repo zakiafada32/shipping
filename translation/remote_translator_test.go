@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/zakiafada32/shipping-go/translation"
+	"github.com/zakiafada32/shipping/translation"
 )
 
 func TestRemoteServiceTestSuite(t *testing.T) {

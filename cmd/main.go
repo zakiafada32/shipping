@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/zakiafada32/shipping-go/config"
-	"github.com/zakiafada32/shipping-go/handlers"
-	"github.com/zakiafada32/shipping-go/handlers/rest"
-	"github.com/zakiafada32/shipping-go/translation"
+	"github.com/zakiafada32/shipping/config"
+	"github.com/zakiafada32/shipping/handlers"
+	"github.com/zakiafada32/shipping/handlers/rest"
+	"github.com/zakiafada32/shipping/translation"
 )
 
 func main() {
